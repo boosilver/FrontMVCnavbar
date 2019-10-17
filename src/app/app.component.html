@@ -1,0 +1,73 @@
+<section>
+	<!-- <section style="background: #161616;" id="boss"> -->
+	<nav class="navbar navbar-expand-sm circle ">
+		
+		<a id="company" class= "navbar-brand nav-link" [routerLink]="['/dashboard']" style="color: rgb(0, 0, 0) ; " >| COMPANY A |</a>
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+
+				<!-- <li class="nav-item active">
+					<a class="nav-link" [routerLink]="['/purchaseorder']"> Create PO
+						<span class="sr-only">
+							(current)
+						</span>
+					</a>
+				</li> -->
+
+				<!-- <li class="nav-item active">
+					<a class="nav-link" [routerLink]="['/invoice']"> Create Invoice
+						<span class="sr-only">
+							(current)
+						</span>
+					</a>
+				</li> -->
+
+				<!-- <li class="nav-item active"> 	
+					<a class="nav-link" [routerLink]="['/loanbyinv']"> Loan
+						<span class="sr-only">
+							(current)
+						</span>
+					</a>
+				</li> -->
+
+				<li class="nav-item active">
+					<a class="nav-link" [routerLink]="['/accept']"> accept loan
+						<span class="sr-only">
+							(current)
+						</span>
+					</a>
+				</li>
+
+				<li class="nav-item active">
+					<a class="nav-link" [routerLink]="['/checkpo']"> Inquire DATA
+						<span class="sr-only">
+							(current)
+						</span>
+					</a>
+				</li>
+
+				<!-- <li class="nav-item active">
+					<a class="nav-link" [routerLink]="['/reject']"> Reject
+						<span class="sr-only">
+							(current)
+						</span>
+					</a>
+				</li> -->
+			
+				<!-- <li class="nav-item active">
+					<a class="nav-link" [routerLink]="['/acceptinvoice']"> accept invoice
+						<span class="sr-only">
+							(current)
+						</span>
+					</a>
+				</li> -->
+			</ul>
+    </div>
+  </nav>
+
+	<div>
+    
+		<router-outlet></router-outlet>
+  </div>
+  
+</section>

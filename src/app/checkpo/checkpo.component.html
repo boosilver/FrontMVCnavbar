@@ -1,0 +1,166 @@
+<div class="container">
+  <ngx-loading [show]="loading"></ngx-loading>
+  <br>
+  <div class="form-group row">
+    <H1>INQUIRE DATA</H1>
+  </div>
+  <form (ngSubmit)="onSubmit()" ngNativeValidate>
+
+    <div class="form-group row">
+      <label for="user" class="col-1 col-form-label text-right font-weight-bold">User</label>
+      <div class="col-2">
+        <input type="text" class="form-control " [(ngModel)]="model.user" name="user" id="user" required>
+      </div>
+
+      <label for="TYPE" class="col-2 col-form-label text-right font-weight-bold">Type</label>
+      <div class=" field-label col-md-3 mx-auto">
+        <select class="form-control" required [(ngModel)]="model.TYPE" [name]="TYPE" id="TYPE"
+          [ngModelOptions]="{standalone: true}">
+          <option value="PO">Purchase Order</option>
+          <option value="INVOICE">Invoice</option>
+          <option value="ENDORSE_LOAN">Endorse Loan</option>
+          <option value="LOAN_PO">Loan by PO</option>
+          <option value="LOAN_INVOICE">Loan by Invoice</option>
+
+        </select>
+      </div>
+
+      <!-- <label for="TYPE" class="col-2 col-form-label text-right font-weight-bold">
+        TYPE
+      </label>
+      <div class="col-2">
+        <input type="text" class="form-control " [(ngModel)]="model.TYPE" name="TYPE" id="TYPE" required>
+      </div> -->
+
+      <!-- ----------------------------------SUBMIT-------------------------------------- -->
+      <div class="col-md-2">
+        <div class="center">
+          <button type="submit" class="w3-btn w3-grey w3-border w3-border-green w3-text-white w3-round-xlarge"
+            style="text-shadow:1px 1px 0 #444">SUBMIT</button>
+        </div>
+      </div>
+      <!-- ----------------------------------SUBMIT-------------------------------------- -->
+
+
+    </div>
+  </form>
+</div>
+<br>
+
+
+
+<div class="container" id="result" style='display:none;'>
+
+  <!-- Table -->
+  <br>
+  <table class="table table-responsive-sm table-hover table-outline mb-0 table-striped table-light pointer ">
+    <thead>
+      <tr>
+        <th>Key</th>
+        <th>Loan Key</th>
+        <th>Company</th>
+        <th>Date registered</th>
+        <th>Type</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!--  list คือตัวแปรของเรา -->
+      <tr (click)="openModal(template,key)" *ngFor="let key of Inquire$.DASHBOARD_LIST">
+        <td>{{key.KEY}}</td>
+        <td>{{key.LOAN_KEY}}</td>
+        <td>{{key.COMPANY}}</td>
+        <td>{{key.DATE}}</td>
+        <td>{{key.TYPE}}</td>
+        <td>
+            <span *ngIf="key.SHOW_COMPLETE" class="badge badge-success">{{key.STATUS}}</span>
+            <span *ngIf="key.SHOW_WAIT" class="badge badge-warning">{{key.STATUS}}</span>
+            <span *ngIf="key.SHOW_REJECT" class="badge badge-danger">{{key.STATUS}}</span>
+        </td>
+      </tr>
+      <!-- <tr>
+                <td>Avram Tarasios</td>
+                <td>2012/02/01</td>
+                <td>Staff</td>
+                <td>
+                  <span class="badge badge-danger">Used</span>
+                </td>
+              </tr>
+              <tr>
+                <td>Quintin Ed</td>
+                <td>2012/02/01</td>
+                <td>Admin</td>
+                <td>
+                  <span class="badge badge-secondary">Reject</span>
+                </td>
+              </tr>
+              <tr>
+                <td>Enéas Kwadwo</td>
+                <td>2012/03/01</td>
+                <td>Member</td>
+                <td>
+                  <span class="badge badge-warning">Pending</span>
+                </td>
+              </tr>
+              <tr>
+                <td>Agapetus Tadeáš</td>
+                <td>2012/01/21</td>
+                <td>Staff</td>
+                <td>
+                  <span class="badge badge-success">Active</span>
+                </td>
+              </tr> -->
+    </tbody>
+  </table>
+  <ng-template #template>
+    <div class="modal-body text-center">
+      <p id="closeclick" style="text-align: right" (click)="decline()"><img src="../../assets/images/cancel.png"
+          height="20" width="20"></p>
+      <pre class="card card-block card-header text-left">
+        <p *ngIf="this.body.FROM" ><img src="../../assets/images/{{this.body.FROM}}.png" height="80" width="100"></p>
+        <p style="text-align: right; margin-right:3px; font-weight: bold; font-size:32" *ngIf="this.body.FROM">{{this.body.FROM}}</p>
+        <p style="text-align: right; margin-right:3px; font-weight: bold; font-size:32" *ngIf="this.body.TYPE">{{this.body.TYPE}}</p>
+        <p style="text-align: right;" *ngIf="this.body.KEY" ><span class="font">Document No :</span>{{this.body.KEY}}</p>
+        <p style="text-align: right;" *ngIf="this.body.PO_KEY"><span class="font">Reference No :</span>{{this.body.PO_KEY}}</p>
+        <p style="text-align: right;" *ngIf="this.body.DATE"><span class="font">Date :</span>{{this.body.DATE}}</p>
+        <hr>
+        <p *ngIf="this.body.TO" ><span class="font">To :</span>{{this.body.TO}}</p>
+        <p *ngIf="this.body.BANK"><span class="font">Bank :</span>{{this.body.BANK}}</p>
+        <p *ngIf="this.body.EMAIL"><span class="font">Email :</span>{{this.body.EMAIL}}</p>
+        <p *ngIf="this.body.TEL_NUMBER"><span class="font">Tel Number :</span>{{this.body.TEL_NUMBER}}</p>
+        <p *ngIf="this.body.TAX_ID"><span class="font">Tax ID :</span>{{this.body.TAX_ID}}</p>
+        <p id = "address" *ngIf="this.body.DELIVERY_ADDRESS"><span class="font">Delivery Address :</span>{{this.body.DELIVERY_ADDRESS}}</p>
+        <p *ngIf="this.body.DELIVERY_DATE"><span class="font">Delivery Date :</span>{{this.body.DELIVERY_DATE}}</p>
+        <p *ngIf="this.body.PAYMENT"><span class="font">Payment Date :</span>{{this.body.PAYMENT}}</p>
+        <p id = "address" *ngIf="this.body.ADDRESS"><span class="font">Address :</span>{{this.body.ADDRESS}}</p>
+        <p *ngIf="this.body.PRODUCT"><span class="font">Product :</span>{{this.body.PRODUCT}}</p>
+        <p *ngIf="this.body.NUM_PRODUCT"><span class="font">Number of Product :</span>{{this.body.NUM_PRODUCT}} unit</p>
+        <p *ngIf="this.body.VALUE"><span class="font">Value :</span>{{this.body.VALUE}} B</p>
+        <p *ngIf="this.body.PRICE"><span class="font">Price :</span>{{this.body.PRICE}}</p>
+        <p *ngIf="this.body.VAT"><span class="font">VAT :</span>{{this.body.VAT}} B</p>
+        <p *ngIf="this.body.TOTAL_PRICE"><span class="font">Total :</span>{{this.body.TOTAL_PRICE}} B</p>
+        <p *ngIf="this.body.LOAN_AMOUNT"><span class="font">Loan Amount :</span>{{this.body.LOAN_AMOUNT}} B</p>
+        <p *ngIf="this.body.INSTALLMENT"><span class="font">Installment period :</span>{{this.body.INSTALLMENT}}</p>
+        <p *ngIf="this.body.LOAN_AMOUNT"><span class="font">Loan Amount :</span>{{this.body.LOAN_AMOUNT}} B</p>
+        <p *ngIf="this.body.PO_KEY"><span class="font">Purchase Order Key :</span>{{this.body.PO_KEY}}</p>
+        <p *ngIf="this.body.INVOICE_KEY"><span class="font">Invoice Key :</span>{{this.body.INVOICE_KEY}}</p>
+        <p *ngIf="this.body.LOAN_KEY"><span class="font">Loan Key :</span>{{this.body.LOAN_KEY}}</p>
+
+
+      </pre>
+
+    </div>
+
+    <div class="container" id="error" style='display:none;'>
+
+      <h3> ERROR </h3>
+      <div class="row">
+        <label for="erMass" class="col-2 col-form-label text-right font-weight-bold">
+          Massage
+        </label>
+        <div class="col-12">
+          <input type="text" class="form-control border-bottom " name="erMass" id="erMass" value="0"
+            style="border:none; text-align: center;font-weight: bold;" readonly>
+        </div>
+      </div>
+    </div>
